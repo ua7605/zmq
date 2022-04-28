@@ -22,6 +22,9 @@ public class mainSubscriber
 //        ZmqSubscriber subscriber = new ZmqSubscriber("127.0.0.1", "2001");
         ZmqSubscriber subscriber = new ZmqSubscriber("193.190.127.147", "2001"); // To test it with VS8
         subscriber.subscribe("allData", mainSubscriber::handleIncomingData);
+
+        // this is the command to generate the jar file:
+        //  mvn clean compile assembly:single
     }
 
 }
