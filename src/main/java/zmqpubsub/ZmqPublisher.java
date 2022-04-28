@@ -1,9 +1,9 @@
 package zmqpubsub;
+
 import com.google.gson.JsonObject;
-import netscape.javascript.JSObject;
 import org.zeromq.SocketType;
-import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
+import org.zeromq.ZMQ;
 
 public class ZmqPublisher
 {
@@ -26,7 +26,6 @@ public class ZmqPublisher
 
     public void publish(String topic, JsonObject payload)
     {
-        System.out.println(payload);
         socket.send(topic+":"+payload);
     }
 }
