@@ -1,25 +1,27 @@
+import netscape.javascript.JSObject;
 import org.zeromq.SocketType;
 import org.zeromq.ZMQ;
 import org.zeromq.ZContext;
+import zmqpubsub.ZmqPublisher;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main
 {
     public static void main(String[] args) throws Exception
     {
-        try (ZContext context = new ZContext())
+        String jsonString = "{'test1':'value1','test2':{'id':0,'name':'testName'}}";
+        JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
+        System.out.println(jsonObject);
+
+         ZmqPublisher publisher = new ZmqPublisher("127.0.0.1", "2001");
+        for(int i=0; i<10; i++)
         {
-            ZMQ.Socket socket = context.createSocket(SocketType.PUB);
-            socket.bind("tcp://*:5555");
-
-            while (!Thread.currentThread().isInterrupted())
-            {
-                System.out.println("waiting for message");
-                byte[] reply = socket.recv(0);
-
-                // Print the message
-                System.out.println("Received: [" + new String(reply, ZMQ.CHARSET) + "]"
-                );
-            }
+            publisher.publish("allData", jsonObject);
+            System.out.println("published");
+            TimeUnit.SECONDS.sleep(1);
 
         }
 
