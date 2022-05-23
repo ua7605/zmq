@@ -30,10 +30,18 @@ public class ZmqSubscriber
             while (true)
             {
                 byte[] recv = socket.recv();
-                String receivedStringMessage = new String(recv);
-                // s1 contains everything after = in the original string (i.e. =....) therefore +1 to remove the =
-                JsonObject jsonObject = (JsonObject) JsonParser.parseString(receivedStringMessage.substring(receivedStringMessage.indexOf(":") + 1));
-                consumer.accept(jsonObject);
+                try
+                {
+                    String receivedStringMessage = new String(recv);
+                    // s1 contains everything after = in the original string (i.e. =....) therefore +1 to remove the =
+                    JsonObject jsonObject = (JsonObject) JsonParser.parseString(receivedStringMessage.substring(receivedStringMessage.indexOf(":") + 1));
+                    consumer.accept(jsonObject);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace(System.out);
+                    System.out.println("Error: parsing the received data (the data needs to be in JSON format");
+                }
             }
         }).start();
     }

@@ -1,3 +1,4 @@
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import zmqpubsub.ZmqSubscriber;
 
@@ -19,12 +20,14 @@ public class mainSubscriber
 
     public static void main(String[] args)
     {
-//        ZmqSubscriber subscriber = new ZmqSubscriber("127.0.0.1", "2001");
+//       ZmqSubscriber subscriber = new ZmqSubscriber("127.0.0.1", "2001");
         ZmqSubscriber subscriber = new ZmqSubscriber("193.190.127.147", "2001"); // To test it with VS8
         subscriber.subscribe("allData", mainSubscriber::handleIncomingData);
 
+
         // this is the command to generate the jar file:
         //  mvn clean compile assembly:single
+        // To run it: java -jar <name of the .jar file (with .jar included)>
     }
 
 }
